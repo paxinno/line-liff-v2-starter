@@ -2,14 +2,15 @@
   "name": "liff-starter-vanilla",
   "version": "0.1.0",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
+    "dev": "LIFF_ID='2007934501-Q15J9pAG' cross-env NODE_ENV=development webpack-dev-server --progress",
     "build": "cross-env NODE_ENV=production webpack"
   },
   "dependencies": {
     "@line/liff": "^2.16.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
     "babel-cli": "^6.18.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
