@@ -22,6 +22,98 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 document.getElementById('profile_string').innerHTML = "ログインされていません。"
             }
+
+            // --- Calendar Logic ---
+            const monthYearElement = document.getElementById('month-year');
+            const calendarGrid = document.getElementById('calendar-grid');
+            const prevMonthBtn = document.getElementById('prev-month-btn');
+            const nextMonthBtn = document.getElementById('next-month-btn');
+
+            let currentDate = new Date();
+
+            function renderCalendar() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+
+                monthYearElement.textContent = `${year}年 ${month + 1}月`;
+
+                // Clear previous calendar days
+                const dayElements = calendarGrid.querySelectorAll('.calendar-day');
+                dayElements.forEach(day => day.remove());
+
+                const firstDayOfMonth = new Date(year, month, 1);
+                const lastDayOfMonth = new Date(year, month + 1, 0);
+                const startingDay = firstDayOfMonth.getDay();
+
+                // Add empty cells for days before the 1st
+                for (let i = 0; i < startingDay; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.classList.add('calendar-day', 'empty');
+                    calendarGrid.appendChild(emptyCell);
+                }
+
+                // Add cells for each day of the month
+                for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
+                    const dayCell = document.createElement('div');
+                    dayCell.classList.add('calendar-day');
+                    dayCell.textContent = i;
+                    dayCell.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+
+                    // Add click event listener for reservation
+                    dayCell.addEventListener('click', () => {
+                        const selectedDate = dayCell.dataset.date;
+                        if (!liff.isLoggedIn()) {
+                            alert("予約するにはLINEログインが必要です。");
+                            liff.login();
+                            return;
+                        }
+
+                        const idToken = liff.getDecodedIDToken();
+                        const userId = idToken.sub; // Use 'sub' from ID token for user ID
+                        const userName = idToken.name; // Get user's display name
+
+                        // Call the backend to send a notification
+                        fetch('http://localhost:3000/api/notify-reservation', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ 
+                                userId: userId,
+                                userName: userName,
+                                date: selectedDate 
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(`予約通知を送信しました：${selectedDate}`);
+                            } else {
+                                alert('通知の送信に失敗しました。');
+                                console.error('Backend error:', data.error);
+                            }
+                        })
+                        .catch(error => {
+                            alert('サーバーとの通信に失敗しました。');
+                            console.error('Fetch error:', error);
+                        });
+                    });
+
+                    calendarGrid.appendChild(dayCell);
+                }
+            }
+
+            prevMonthBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            renderCalendar(); // Initial render
         })
         .catch((error) => {
             console.log(error)
