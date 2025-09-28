@@ -1,6 +1,7 @@
 [build]
-  command = "cd src/vanilla && yarn install && yarn build"
-  publish = "src/vanilla/dist"
+base    = "src/vanilla"
+command = "yarn install --frozen-lockfile && yarn build"
+publish = "dist"
 
-[template.environment]
-  LIFF_ID = "Your LIFF ID which is aquired from LINE Dev Center"
+[build.environment]
+NODE_VERSION = "18"
