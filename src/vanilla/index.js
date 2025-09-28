@@ -1,3 +1,5 @@
+// src/vanilla/index.js （このファイル全体を置き換え）
+
 import './index.css';
 import liff from '@line/liff'
 
@@ -11,8 +13,6 @@ const LIFF_ID =
 const BASE_LIFF_URL = LIFF_ID ? `https://liff.line.me/${LIFF_ID}/` : (location.origin + location.pathname);
 
 // 共有用 Flex メッセージ（URI は BASE_LIFF_URL を使用）
-
-
 const customActionButtonMessage = {
     "type": "flex",
     "altText": "代替テキスト",
@@ -118,7 +118,7 @@ const customActionButtonMessage = {
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         // ★ ここを修正：LIFF_ID があればそれで初期化、無ければミニアプリモード({})
-        liff.init(process.env.LIFF_ID ? { liffId: process.env.LIFF_ID } : {})
+        await liff.init(LIFF_ID ? { liffId: LIFF_ID } : {});
 
         console.log("LIFF init success");
 
