@@ -213,3 +213,69 @@ html, body {
   border: none;
   cursor: default;
 }
+
+/* ==== Calendar hardening ==== */
+.calendar-container {
+  max-width: 460px;
+  margin: 24px auto;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+/* ほかのレイアウトの影響を受けないように */
+.calendar-container * {
+  box-sizing: border-box;
+}
+
+/* グリッドを強制 */
+.calendar-container .calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  margin-top: 8px;
+}
+
+.calendar-container .calendar-day-header,
+.calendar-container .calendar-day {
+  text-align: center !important;
+  padding: 8px 6px !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  background: #fafafa;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.calendar-container .calendar-day {
+  font-weight: 500;
+  background: #fff;
+}
+
+.calendar-container .calendar-day.empty {
+  background: #f8fafc !important;
+  border-style: dashed;
+}
+
+/* ヘッダーの左右ボタンと月表示も崩れにくく */
+.calendar-container .calendar-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.calendar-container .calendar-header h3 {
+  margin: 0;
+  text-align: center;
+}
+.calendar-container #prev-month-btn,
+.calendar-container #next-month-btn {
+  width: 48px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
