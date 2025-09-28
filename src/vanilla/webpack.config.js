@@ -4,19 +4,15 @@ const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const env = process.env.NODE_ENV;
-
-const commonConfig = {
-  mode: env,
+const commonConfig = (env, argv) => ({
+  mode: argv.mode, // 'development' or 'production' from CLI
 
   devServer: {
-    static: [
-      {
-        directory: path.join(__dirname, 'public'),
-        watch: true,
-      }
-    ],
-    port: 8080, // Port 3000 is used by the backend, so use 8080 for the dev server
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
+    port: 8080, // Use 8080 to avoid conflict with backend
+    hot: true, // Enable HMR
   },
 
   resolve: {
@@ -35,7 +31,8 @@ const commonConfig = {
       {
         test: /\.(css)$/,
         use: [
-          env === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          // Use style-loader in development, extract to file in production
+          argv.mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
         ]
       }
@@ -43,36 +40,33 @@ const commonConfig = {
   },
 
   plugins: [
-    // Use DefinePlugin to embed environment variables at build time
+    // This is the definitive fix: embed LIFF_ID, fallback to empty string if not set.
     new webpack.DefinePlugin({
-      'process.env.LIFF_ID': JSON.stringify(process.env.LIFF_ID)
+      'process.env.LIFF_ID': JSON.stringify(process.env.LIFF_ID || '')
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "[name].[contenthash].css",
     })
-  ]
-};
+  ].filter(Boolean)
+});
 
-const vanillaConfig = merge(
-  commonConfig,
+const vanillaConfig = (env, argv) => merge(
+  commonConfig(env, argv),
   {
     name: "vanilla",
     entry: './index.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].bundle.js',
-      publicPath: ''
+      filename: '[name].[contenthash].js',
+      publicPath: '', // Use relative paths for all assets
+      clean: true, // Clean the dist folder before each build
     },
     plugins: [
       new HtmlWebpackPlugin({template: './index.html'})
     ]
   }
-)
+);
 
-// TODO: Add entries for other implementations.
-
-module.exports = [
-  vanillaConfig      
+module.exports = (env, argv) => [
+  vanillaConfig(env, argv)      
 ];
