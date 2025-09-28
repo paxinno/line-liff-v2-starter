@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "LIFF_ID='2007934501-Q15J9pAG' cross-env NODE_ENV=development webpack-dev-server --progress",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env LIFF_ID=$LIFF_ID NODE_ENV=production webpack"
   },
   "dependencies": {
     "@line/liff": "^2.16.0"
