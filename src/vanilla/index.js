@@ -118,6 +118,7 @@ const customActionButtonMessage = {
 document.addEventListener("DOMContentLoaded", async function () {
     try {
         // ★ ここを修正：LIFF_ID があればそれで初期化、無ければミニアプリモード({})
+        console.log('LIFF_ID (from code):', LIFF_ID); // デバッグ用ログ
         await liff.init(LIFF_ID ? { liffId: LIFF_ID } : {});
 
         console.log("LIFF init success");
@@ -223,7 +224,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         renderCalendar(); // Initial render
     } catch (error) {
         console.error('LIFF init error', error);
-        alert('LIFF 初期化に失敗しました');
+        alert(`LIFF 初期化に失敗しました: ${error.message}`);
     }
 });
 
