@@ -1,7 +1,7 @@
 [build]
-base    = "src/vanilla"
-command = "yarn install --frozen-lockfile && yarn build"
-publish = "dist"
+  base    = "src/vanilla"
+  command = "yarn install --frozen-lockfile && yarn build"
+  publish = "dist"
 
 [build.environment]
-NODE_VERSION = "18"
+  NODE_VERSION = "22"
