@@ -1,10 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <title>LIFF ID Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="index.css" />
+  <title>LIFF Starter</title>
 </head>
+
 <body>
-  <!-- This will be replaced by index.js -->
+  <div class="home">
+    <h1 class="home__title">
+      Welcome to <br /><a class="home__title__link" href="https://developers.line.biz/en/docs/liff/overview/">LIFF
+        Starter!</a>
+    </h1>
+    <div class="home__badges">
+      <span class="home__badges__badge badge--primary"> LIFF Starter </span>
+      <span class="home__badges__badge badge--secondary"> vanilla </span>
+      <span class="home__badges__badge badge--tertiary"> 0.1.0 </span>
+      <a href="https://github.com/line/line-liff-v2-starter" target="_blank" rel="noreferrer"
+        class="home__badges__badge badge--secondary">
+        GitHub
+      </a>
+    </div>
+    <div class="home__buttons">
+      <a href="https://developers.line.biz/en/docs/liff/developing-liff-apps/" target="_blank" rel="noreferrer"
+        class="home__buttons__button button--primary">
+        LIFF Documentation
+      </a>
+      <a href="https://liff-playground.netlify.app/" target="_blank" rel="noreferrer"
+        class="home__buttons__button button--tertiary">
+        LIFF Playground
+      </a>
+      <a href="https://developers.line.biz/console/" target="_blank" rel="noreferrer"
+        class="home__buttons__button button--secondary">
+        LINE Developers Console
+      </a>
+      <hr width="100%" />
+      <div>
+        <img id="profile_img" width="100px" />
+        <h2 id="profile_string" />
+      </div>
+      <hr width="100%" />
+
+      <div class="calendar-container">
+        <h2 class="calendar-title">予約カレンダー</h2>
+        <div class="calendar-header">
+          <button id="prev-month-btn">&lt;</button>
+          <h3 id="month-year"></h3>
+          <button id="next-month-btn">&gt;</button>
+        </div>
+        <div class="calendar-grid" id="calendar-grid">
+          <div class="calendar-day-header">日</div>
+          <div class="calendar-day-header">月</div>
+          <div class="calendar-day-header">火</div>
+          <div class="calendar-day-header">水</div>
+          <div class="calendar-day-header">木</div>
+          <div class="calendar-day-header">金</div>
+          <div class="calendar-day-header">土</div>
+        </div>
+      </div>
+
+      <a id="login" class="home__buttons__button button--primary">
+        Login with LINE
+      </a>
+      <a id="logout" class="home__buttons__button button--tertiary">
+        Logout
+      </a>
+      <a id="stp" class="home__buttons__button button--secondary">
+        Share Target Picker
+      </a>
+      <a id="scan" class="home__buttons__button button--secondary">
+        Scan Code
+      </a>
+      <a id="service_message" class="home__buttons__button button--secondary">
+        Service Message
+      </a>
+      <a id="custom_action" class="home__buttons__button button--secondary">
+        Custom Action
+      </a>
+      <a href="./dashboard.html" class="home__buttons__button button--primary">
+        予約ダッシュボード
+      </a>
+      <a id="send_msg" class="home__buttons__button button--primary">ミニアプリで送信</a>
+    </div>
+  </div>
 </body>
+
 </html>

@@ -4,4 +4,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "20"
+
+[template.environment]
+  LIFF_ID = "2007934501-Q15J9pAG"

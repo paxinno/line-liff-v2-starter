@@ -1,0 +1,6 @@
+{
+  "to": "Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "messages": [
+    { "type": "text", "text": "Messaging API：テキスト送信テスト\n改行挙動を比較" }
+  ]
+}

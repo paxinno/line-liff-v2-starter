@@ -1,0 +1,35 @@
+[
+  {
+    "type": "flex",
+    "altText": "Flexサンプル（ミニアプリ）",
+    "contents": {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "url": "https://picsum.photos/800/520",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          { "type": "text", "text": "Flexタイトル", "weight": "bold", "size": "lg" },
+          { "type": "text", "text": "説明テキスト（ミニアプリ）", "size": "sm", "color": "#777777", "wrap": true }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": { "type": "uri", "label": "開く", "uri": "https://liff.line.me/2007934501-Q15J9pAG/" }
+          }
+        ]
+      }
+    }
+  }
+]
