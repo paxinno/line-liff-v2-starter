@@ -62,7 +62,8 @@ const vanillaConfig = (env, argv) => merge(
       clean: true, // Clean the dist folder before each build
     },
     plugins: [
-      new HtmlWebpackPlugin({template: './index.html'})
+      new HtmlWebpackPlugin({template: './index.html', chunks: ['main']}),
+      new HtmlWebpackPlugin({template: './dashboard.html', filename: 'dashboard.html', chunks: []}) // dashboard.js があれば chunks に追加
     ]
   }
 );

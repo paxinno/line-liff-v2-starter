@@ -2,10 +2,7 @@ import './index.css';
 import liff from '@line/liff'
 
 // 環境変数から LIFF_ID を取得（未設定なら undefined）
-const LIFF_ID =
-    (typeof process !== 'undefined' && process.env && process.env.LIFF_ID && String(process.env.LIFF_ID).trim())
-        ? String(process.env.LIFF_ID).trim()
-        : undefined;
+const LIFF_ID = "2007934501-Q15J9pAG";
 
 // LIFF のディープリンク用ベースURL（LIFF_IDがあれば liff.line.me、なければ現在ページ）
 const BASE_LIFF_URL = LIFF_ID ? `https://liff.line.me/${LIFF_ID}/` : (location.origin + location.pathname);
@@ -115,8 +112,12 @@ const customActionButtonMessage = {
 
 document.addEventListener("DOMContentLoaded", async function () {
     try {
+        alert("1. 処理開始");
+        const initConfig = { liffId: LIFF_ID };
+        alert(`これから初期化します。liffId: ${initConfig.liffId}`);
         // ★ ここを修正：LIFF_ID があればそれで初期化、無ければミニアプリモード({})
-        await liff.init(LIFF_ID ? { liffId: LIFF_ID } : {});
+        await liff.init(initConfig);
+        alert("2. LIFF初期化完了");
 
         console.log("LIFF init success");
 
@@ -148,9 +149,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         if (liff.isLoggedIn()) {
+            alert("3. ログイン状態確認");
             const idToken = liff.getDecodedIDToken();
             if (idToken?.picture) document.getElementById('profile_img').src = idToken.picture;
             document.getElementById('profile_string').innerHTML = "こんにちは！" + (idToken?.name ?? "") + "さん！"
+            alert("4. プロフィール表示完了");
         } else {
             document.getElementById('profile_string').innerHTML = "ログインされていません。"
         }
@@ -159,7 +162,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const monthYearElement = document.getElementById('month-year');
         const calendarGrid = document.getElementById('calendar-grid');
         const prevMonthBtn = document.getElementById('prev-month-btn');
-        const nextMonthBtn = document('next-month-btn');
+        const nextMonthBtn = document.getElementById('next-month-btn');
 
         let currentDate = new Date();
 
@@ -203,24 +206,25 @@ document.addEventListener("DOMContentLoaded", async function () {
                     const userId = idToken.sub;
                     const userName = idToken.name;
 
-                    fetch('http://localhost:3000/api/notify-reservation', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ userId, userName, date: selectedDate }),
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                alert(`予約通知を送信しました：${selectedDate}`);
-                            } else {
-                                alert('通知の送信に失敗しました。');
-                                console.error('Backend error:', data.error);
-                            }
-                        })
-                        .catch(err => {
-                            alert('サーバーとの通信に失敗しました。');
-                            console.error('Fetch error:', err);
-                        });
+                    // fetch('http://localhost:3000/api/notify-reservation', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify({ userId, userName, date: selectedDate }),
+                    // })
+                    //     .then(res => res.json())
+                    //     .then(data => {
+                    //         if (data.success) {
+                    //             alert(`予約通知を送信しました：${selectedDate}`);
+                    //         } else {
+                    //             alert('通知の送信に失敗しました。');
+                    //             console.error('Backend error:', data.error);
+                    //         }
+                    //     })
+                    //     .catch(err => {
+                    //         alert('サーバーとの通信に失敗しました。');
+                    //         console.error('Fetch error:', err);
+                    //     });
+                    alert(`予約日: ${selectedDate} を選択しました。通知機能は現在無効化されています。`);
                 });
 
                 calendarGrid.appendChild(dayCell);
@@ -237,7 +241,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             renderCalendar();
         });
 
+        alert("5. カレンダー描画開始");
         renderCalendar(); // Initial render
+        alert("6. ページ読み込み完了");
     } catch (error) {
         console.error('LIFF init error', error);
         alert(`LIFF 初期化に失敗しました: ${error.message}`);
