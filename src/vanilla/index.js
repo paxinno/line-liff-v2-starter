@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           try {
             if (!liff.isLoggedIn()) {
               alert("ログインが必要です");
-              liff.login();
+              liff.login({ prompt: 'consent' });
               return;
             }
             // ここでどのパターンを送るか切替（例：テキスト）
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     const selectedDate = dayCell.dataset.date;
                     if (!liff.isLoggedIn()) {
                         alert("予約するにはLINEログインが必要です。");
-                        liff.login();
+                        liff.login({ prompt: 'consent' });
                         return;
                     }
 
@@ -250,7 +250,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-function liff_login() { liff.login() }
+function liff_login() { 
+    alert("同意画面の再表示を試みます");
+    liff.login({ prompt: 'consent' })
+}
 
 function liff_logout() {
     liff.logout()

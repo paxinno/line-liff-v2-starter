@@ -1,10 +1,8 @@
 [build]
   base    = "src/vanilla"
-  command = "yarn install --frozen-lockfile && yarn build"
+  command = "yarn install --frozen-lockfile && LIFF_ID='2007934501-Q15J9pAG' yarn build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-
-[template.environment]
   LIFF_ID = "2007934501-Q15J9pAG"
